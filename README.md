@@ -42,7 +42,7 @@ If you have logistic questions or comments on the model, please contact [Prof. S
 ## Installation steps (Linux)
 1. Get the tool from GitHub
 ```
-git clone https://github.com/neurosim/DNN-NeuroSim-V1.1.git
+git clone https://github.com/neurosim/DNN_NeuroSim_V1.1.git
 ```
 
 2. Train the network to get the model for inference
