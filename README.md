@@ -5,7 +5,7 @@ The DNN+NeuroSim framework was developed by [Prof. Shimeng Yu's group](https://s
 This is the released version 1.1 (Dec 06, 2019) for the tool, and this version has **_improved following hardware estimation_**:
 ```
 1. In sub-array, use linear-region transistor in MUX, Switch Matrix and across-transistor in array.
-2. Seperate column delay in ADC, for array initialization during read.
+2. Separate column delay in ADC, for array initialization during read.
 3. Improve buffer design: use multi-core architecture in buffer, to improve parallelism
 4. Use low-swing IC (H-tree and Bus): save data transfer energy
 5. Calibrate FinFET technology library (<20nm)
