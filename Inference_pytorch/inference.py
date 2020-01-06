@@ -130,7 +130,3 @@ logger('Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)'.format(
 	test_loss, correct, len(test_loader.dataset), acc))
 
 call(["/bin/bash", "./layer_record/trace_command.sh"])
-
-finish_time = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-print("--- Total Simulation Time: ---")
-print(finish_time-current_time)
