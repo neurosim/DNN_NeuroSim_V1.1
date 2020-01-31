@@ -12,11 +12,13 @@ class CIFAR(nn.Module):
         self.classifier = nn.Sequential(
             QLinear(8192, 1024, logger=logger,
                     wl_input = args.wl_activate,wl_activate=args.wl_activate,wl_error=args.wl_error,
-                    wl_weight=args.wl_weight, name='FC1_'),
+                    wl_weight=args.wl_weight,inference=args.inference,onoffratio=args.onoffratio,cellBit=args.cellBit,
+                    subArray=args.subArray,ADCprecision=args.ADCprecision,vari=args.vari,t=args.t,v=args.v,detect=args.detect,target=args.target, name='FC1_'),
             nn.ReLU(inplace=True),
             QLinear(1024, num_classes, logger=logger,
                     wl_input = args.wl_activate,wl_activate=-1, wl_error=args.wl_error,
-                    wl_weight=args.wl_weight,name='FC2_'))
+                    wl_weight=args.wl_weight,inference=args.inference,onoffratio=args.onoffratio,cellBit=args.cellBit,
+                    subArray=args.subArray,ADCprecision=args.ADCprecision,vari=args.vari,t=args.t,v=args.v,detect=args.detect,target=args.target,name='FC2_'))
 
         print(self.features)
         print(self.classifier)
@@ -42,7 +44,9 @@ def make_layers(cfg, args, logger ):
                 padding = 0
             conv2d = QConv2d(in_channels, out_channels, kernel_size=v[2], padding=padding,
                              logger=logger,wl_input = args.wl_activate,wl_activate=args.wl_activate,
-                             wl_error=args.wl_error,wl_weight= args.wl_weight,name = 'Conv'+str(i)+'_' )
+                             wl_error=args.wl_error,wl_weight= args.wl_weight,inference=args.inference,onoffratio=args.onoffratio,cellBit=args.cellBit,
+                             subArray=args.subArray,ADCprecision=args.ADCprecision,vari=args.vari,t=args.t,v=args.v,detect=args.detect,target=args.target,
+                             name = 'Conv'+str(i)+'_' )
             non_linearity_activation =  nn.ReLU()
             layers += [conv2d, non_linearity_activation]
             in_channels = out_channels
