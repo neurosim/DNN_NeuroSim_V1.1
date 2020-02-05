@@ -394,7 +394,7 @@ int main(int argc, char * argv[]) {
 	cout << "Total IC Area on chip (Global and Tile/PE local): " << chipAreaIC*1e12 << "um^2" << endl;
 	cout << "Total ADC (or S/As and precharger for SRAM) Area on chip : " << chipAreaADC*1e12 << "um^2" << endl;
 	cout << "Total Accumulation Circuits (subarray level: adders, shiftAdds; PE/Tile/Global level: accumulation units) on chip : " << chipAreaAccum*1e12 << "um^2" << endl;
-	cout << "Other Peripheries (e.g. decoders, mux, switchmatrix, buffers, IC, pooling and activation units) : " << chipAreaOther*1e12 << "um^2" << endl;
+	cout << "Other Peripheries (e.g. decoders, mux, switchmatrix, buffers, pooling and activation units) : " << chipAreaOther*1e12 << "um^2" << endl;
 	cout << endl;
 	if (! param->pipeline) {
 		cout << "Chip layer-by-layer readLatency (per image) is: " << chipReadLatency*1e9 << "ns" << endl;
