@@ -220,7 +220,7 @@ vector<double> TileCalculateArea(double numPE, double peSize, double *height, do
 	areaResults.push_back(hTree->area);
 	areaResults.push_back(PEareaADC*numPE);
 	areaResults.push_back(PEareaAccum*numPE + accumulation->area);
-	areaResults.push_back(PEareaOther*numPE + inputBuffer->area + outputBuffer->area + hTree->area + areareLu + areasigmoid);
+	areaResults.push_back(PEareaOther*numPE + inputBuffer->area + outputBuffer->area + areareLu + areasigmoid);
 
 	return areaResults;
 }
