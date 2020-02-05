@@ -569,7 +569,7 @@ vector<double> ChipCalculateArea(InputParameter& inputParameter, Technology& tec
 	areaResults.push_back(areaIC);
 	areaResults.push_back(areaADC);
 	areaResults.push_back(areaAccum + Gaccumulation->area);
-	areaResults.push_back(areaOther + globalBufferArea + GhTree->area + maxPool->area + areaGreLu + areaGsigmoid);
+	areaResults.push_back(areaOther + globalBufferArea + maxPool->area + areaGreLu + areaGsigmoid);
 	
 	*height = sqrt(area);
 	*width = area/(*height);
