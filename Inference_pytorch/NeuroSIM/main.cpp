@@ -181,7 +181,7 @@ int main(int argc, char * argv[]) {
 	
 	double numComputation = 0;
 	for (int i=0; i<netStructure.size(); i++) {
-		numComputation += netStructure[i][0] * netStructure[i][1] * netStructure[i][2] * netStructure[i][3] * netStructure[i][4] * netStructure[i][5];
+		numComputation += 2*(netStructure[i][0] * netStructure[i][1] * netStructure[i][2] * netStructure[i][3] * netStructure[i][4] * netStructure[i][5]);
 	}
 	
 	
