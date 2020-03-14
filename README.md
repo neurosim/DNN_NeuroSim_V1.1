@@ -2,7 +2,7 @@
 
 The DNN+NeuroSim framework was developed by [Prof. Shimeng Yu's group](https://shimeng.ece.gatech.edu/) (Georgia Institute of Technology). The model is made publicly available on a non-commercial basis. Copyright of the model is maintained by the developers, and the model is distributed under the terms of the [Creative Commons Attribution-NonCommercial 4.0 International Public License](http://creativecommons.org/licenses/by-nc/4.0/legalcode)
 
-This is the released version 1.1 (Dec 06, 2019) for the tool, and this version has **_improved following hardware estimation_**:
+This is the released version 1.1 (Dec 06, 2019) for the tool, and this version has **_improved following inference engine estimation_**:
 ```
 1. In sub-array, use linear-region transistor in MUX, Switch Matrix and across-transistor in array.
 2. Separate column delay in ADC, for array initialization during read.
@@ -10,13 +10,14 @@ This is the released version 1.1 (Dec 06, 2019) for the tool, and this version h
 4. Use low-swing IC (H-tree and Bus): save data transfer energy
 5. Calibrate FinFET technology library (<20nm)
 ```
-This version has also added **_new features into accuracy estimation_**:
+This version has also added **_new features into inference accuracy estimation_**:
 ```
 1. Introduce On/Off ratio of synaptic device
 2. Introduce data retention effect of synaptic device
 3. Introduce conductance variation of synaptic device
 4. Introduce partial-sum quantization effects into ADC
 ```
+**A new version 2.0 is available at https://github.com/neurosim/DNN_NeuroSim_V2.0, which supports on-chip training accuracy and hardware estimation_**
 
 In Pytorch/Tensorflow wrapper, users are able to define **_network structures, precision of synaptic weight and neural activation_**. With the integrated NeuroSim which takes real traces from wrapper, the framework can support hierarchical organization from device level to circuit level, to chip level and to algorithm level, enabling **_instruction-accurate evaluation on both accuracy and hardware performance of inference_**.
 
