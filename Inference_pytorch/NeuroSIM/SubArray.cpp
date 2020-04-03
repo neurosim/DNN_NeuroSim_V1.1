@@ -630,16 +630,16 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				colDelay = horowitz(tau, beta, wlSwitchMatrix.rampOutput, &colRamp);
 
 				readLatency = 0;
-				readLatency += MAX(wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
+				readLatency += MAX(wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse ));
 				readLatency += precharger.readLatency;
-				readLatency += colDelay/numReadPulse;
+				readLatency += colDelay;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				readLatency += shiftAdd.readLatency;
 				
 				readLatencyADC = precharger.readLatency + colDelay + multilevelSenseAmp.readLatency + multilevelSAEncoder.readLatency;
 				readLatencyAccum = shiftAdd.readLatency;
-				readLatencyOther = MAX(wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
+				readLatencyOther = MAX(wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse ));
 
 				// Write (assume the average delay of pullup and pulldown inverter in SRAM cell)
 				double resPull;
@@ -804,8 +804,8 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				
 				// Read
 				readLatency = 0;
-				readLatency += MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
-				readLatency += colDelay/numReadPulse;
+				readLatency += MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse ));
+				readLatency += colDelay;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				readLatency += adder.readLatency;
@@ -814,7 +814,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				
 				readLatencyADC = multilevelSenseAmp.readLatency + multilevelSAEncoder.readLatency;
 				readLatencyAccum = adder.readLatency + dff.readLatency + shiftAdd.readLatency;
-				readLatencyOther = MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse) + colDelay/numReadPulse;
+				readLatencyOther = MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse )) + colDelay;
 				
 				// // Write
 				// writeLatency = 0;
@@ -850,15 +850,15 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				
 				// Read
 				readLatency = 0;
-				readLatency += MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
-				readLatency += colDelay/numReadPulse;
+				readLatency += MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse ));
+				readLatency += colDelay;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				readLatency += shiftAdd.readLatency;
 				
 				readLatencyADC = multilevelSenseAmp.readLatency + multilevelSAEncoder.readLatency;
 				readLatencyAccum = shiftAdd.readLatency;
-				readLatencyOther = MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse) + colDelay/numReadPulse;
+				readLatencyOther = MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0)/numReadPulse )) + colDelay;
 				/***
 				// Write
 				writeLatency = 0;
@@ -894,8 +894,8 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				
 				// Read
 				readLatency = 0;
-				readLatency += MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
-				readLatency += colDelay/numReadPulse;
+				readLatency += MAX(wlDecoder.readLatency + wlNewDecoderDriver.readLatency + wlDecoderDriver.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) ));
+				readLatency += colDelay;
 				readLatency += rowCurrentSenseAmp.readLatency;
 				readLatency += adder.readLatency;
 				readLatency += dff.readLatency;
@@ -931,8 +931,8 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 
 				// Read
 				readLatency = 0;
-				readLatency += MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
-				readLatency += colDelay/numReadPulse;
+				readLatency += MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) ));
+				readLatency += colDelay;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				
@@ -970,7 +970,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				// Read
 				readLatency = 0;
 				readLatency += MAX(wlNewSwitchMatrix.readLatency + wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
-				readLatency += colDelay/numReadPulse;
+				readLatency += colDelay;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				readLatency += shiftAdd.readLatency;
