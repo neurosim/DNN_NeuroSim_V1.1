@@ -578,7 +578,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				double gm = CalculateTransconductance(cell.widthAccessCMOS * tech.featureSize, NMOS, tech);
 				double beta = 1 / (resPullDown * gm);
 				double colRamp = 0;
-				colDelay = horowitz(tau, beta, wlDecoder.rampOutput, &colRamp) * numReadOperationPerRow * numRow * numReadPulse * activityRowRead;
+				colDelay = horowitz(tau, beta, wlDecoder.rampOutput, &colRamp) * numReadOperationPerRow * numRow * activityRowRead;
 
 				readLatency += wlDecoder.readLatency;
 				readLatency += precharger.readLatency;
@@ -627,12 +627,12 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				double gm = CalculateTransconductance(cell.widthAccessCMOS * tech.featureSize, NMOS, tech);
 				double beta = 1 / (resPullDown * gm);
 				double colRamp = 0;
-				colDelay = horowitz(tau, beta, wlSwitchMatrix.rampOutput, &colRamp) * numReadPulse;
+				colDelay = horowitz(tau, beta, wlSwitchMatrix.rampOutput, &colRamp);
 
 				readLatency = 0;
 				readLatency += MAX(wlSwitchMatrix.readLatency, ( ((numColMuxed > 1)==true? (mux.readLatency+muxDecoder.readLatency):0) )/numReadPulse);
 				readLatency += precharger.readLatency;
-				readLatency += colDelay;
+				readLatency += colDelay/numReadPulse;
 				readLatency += multilevelSenseAmp.readLatency;
 				readLatency += multilevelSAEncoder.readLatency;
 				readLatency += shiftAdd.readLatency;
@@ -749,7 +749,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 				double gm = CalculateTransconductance(cell.widthAccessCMOS * tech.featureSize, NMOS, tech);
 				double beta = 1 / (resPullDown * gm);
 				double colRamp = 0;
-				colDelay = horowitz(tau, beta, wlDecoder.rampOutput, &colRamp) * numReadOperationPerRow * numRow * numReadPulse * activityRowRead;
+				colDelay = horowitz(tau, beta, wlDecoder.rampOutput, &colRamp) * numReadOperationPerRow * numRow * activityRowRead;
 
 				readLatency = 0;
 				readLatency += wlSwitchMatrix.readLatency;
