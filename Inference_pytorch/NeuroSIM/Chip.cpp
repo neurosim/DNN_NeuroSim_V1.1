@@ -821,7 +821,7 @@ double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &ne
 			*coreEnergyOther += maxPool->readDynamicEnergy;
 		}
 		double numBitToLoadOut = weightMatrixRow*param->numBitInput*numInVector/netStructure[l][3];
-		double numBitToLoadIn = weightMatrixCol*param->numBitInput*numInVector/netStructure[l][3]/(netStructure[l][6]? 4:1);
+		double numBitToLoadIn = ceil(weightMatrixCol/param->numColPerSynapse)*param->numBitInput*numInVector/(netStructure[l][6]? 4:1);
 		
 		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, (numBitToLoadOut+numBitToLoadIn)/(GhTree->busWidth/ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
 		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, (GhTree->busWidth/ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)), 
