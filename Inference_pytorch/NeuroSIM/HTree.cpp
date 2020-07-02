@@ -62,7 +62,7 @@ void HTree::Initialize(int _numRow, int _numCol, double _delaytolerance, double 
 	delaytolerance = _delaytolerance;
 	busWidth = _busWidth;
 
-	numStage = 2*floor(log2((double) max(numRow, numCol)))+1;   // vertical has N stage, horizontal has N+1 stage
+	numStage = 2*ceil(log2((double) max(numRow, numCol)))+1;   // vertical has N stage, horizontal has N+1 stage
 	unitLengthWireResistance = param->unitLengthWireResistance;
 	unitLengthWireCap = 0.2e-15/1e-6;;   // 0.2 fF/mm
 	
@@ -196,6 +196,7 @@ void HTree::CalculateLatency(int x_init, int y_init, int x_end, int y_end, doubl
 				} else {
 					readLatency += wireLengthV*unitLatencyWire;
 				}
+				
 				/*** horizontal stage ***/
 				wireLengthH /= 2;   // wire length /2 
 				numRepeater = ceil(wireLengthH/minDist);
@@ -296,7 +297,7 @@ void HTree::CalculatePower(int x_init, int y_init, int x_end, int y_end, double 
 		unitLengthEnergyWire = (unitLengthWireCap*minDist)*tech.vdd*tech.vdd/minDist*0.25;
 		double wireLengthV = unitHeight*pow(2, (numStage-1)/2)/2;   // first vertical stage
 		double wireLengthH = unitWidth*pow(2, (numStage-1)/2)/2;    // first horizontal stage (despite of main bus)
-
+		
 		if (((!x_init) && (!y_init)) || ((!x_end) && (!y_end))) {      // root-leaf communicate (fixed addr)
 			for (int i=0; i<(numStage-1)/2; i++) {                     // ignore main bus here, but need to count until last stage (diff from area calculation)
 				/*** vertical stage ***/
