@@ -152,9 +152,9 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 				shiftAdd.Initialize(numAdder, adderBit+1, clkFreq, spikingMode, numReadPulse);
 			}
 		} else if (conventionalParallel) {
-			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
+			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess/numRow/2, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
 			if (numColMuxed>1) {
-				mux.Initialize(ceil(numCol/numColMuxed), numColMuxed, resCellAccess, FPGA);       
+				mux.Initialize(ceil(numCol/numColMuxed), numColMuxed, resCellAccess/numRow/2, FPGA);       
 				muxDecoder.Initialize(REGULAR_ROW, (int)ceil(log2(numColMuxed)), true, false);
 			}
 			multilevelSenseAmp.Initialize(numCol/numColMuxed, levelOutput, clkFreq, numReadCellPerOperationNeuro, true);
@@ -170,11 +170,11 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			dff.Initialize((adderBit+1)*numAdder, clkFreq);	
 			adder.Initialize(adderBit, numAdder);
 		} else if (BNNparallelMode || XNORparallelMode) {
-			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
+			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess/numRow/2, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
 			multilevelSenseAmp.Initialize(numCol/numColMuxed, levelOutput, clkFreq, numReadCellPerOperationNeuro, true);
 			multilevelSAEncoder.Initialize(levelOutput, numCol/numColMuxed);
 		} else {
-			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
+			wlSwitchMatrix.Initialize(ROW_MODE, numRow, resCellAccess/numRow/2, true, false, activityRowRead, activityColWrite, numWriteCellPerOperationMemory, numWriteCellPerOperationNeuro, 1, clkFreq);
 			multilevelSenseAmp.Initialize(numCol/numColMuxed, levelOutput, clkFreq, numReadCellPerOperationNeuro, true);
 			multilevelSAEncoder.Initialize(levelOutput, numCol/numColMuxed);
 			if (numReadPulse > 1) {
