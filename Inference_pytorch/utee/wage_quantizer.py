@@ -56,8 +56,8 @@ def QG(x, bits_G, lr):
     return norm / S(bits_G)
     
 def Retention(x, t, v, detect, target):
-    lower = -1.0
-    upper = 1.0
+    lower = torch.min(x).item()
+    upper = torch.max(x).item()
     if detect == 1: # need to define the sign of v 
         sign = torch.zeros_like(x)
         truncateX = (x+1)/2
