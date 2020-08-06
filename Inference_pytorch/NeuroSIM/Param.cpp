@@ -54,10 +54,10 @@ using namespace std;
 
 Param::Param() {
 	/***************************************** user defined design options and parameters *****************************************/
-	operationmode = 1;     		// 1: conventionalSequential (Use several multi-bit RRAM as one synapse)
+	operationmode = 2;     		// 1: conventionalSequential (Use several multi-bit RRAM as one synapse)
 								// 2: conventionalParallel (Use several multi-bit RRAM as one synapse)
 	
-	memcelltype = 1;        	// 1: cell.memCellType = Type::SRAM
+	memcelltype = 3;        	// 1: cell.memCellType = Type::SRAM
 								// 2: cell.memCellType = Type::RRAM
 								// 3: cell.memCellType = Type::FeFET
 	
@@ -106,10 +106,10 @@ Param::Param() {
 	
 	/*** conventional hardware design options ***/
 	clkFreq = 1e9;                      // Clock frequency
-	featuresize = 14e-9;                // Wire width for subArray simulation
+	featuresize = 40e-9;                // Wire width for subArray simulation
 	temp = 301;                         // Temperature (K)
-	technode = 7;                      // Technology
-	wireWidth = 14;                     // wireWidth of the cell for Accuracy calculation
+	technode = 32;                      // Technology
+	wireWidth = 40;                     // wireWidth of the cell for Accuracy calculation
 	globalBusDelayTolerance = 0.1;      // to relax bus delay for global H-Tree (chip level: communication among tiles), if tolerance is 0.1, the latency will be relax to (1+0.1)*optimalLatency (trade-off with energy)
 	localBusDelayTolerance = 0.1;       // to relax bus delay for global H-Tree (tile level: communication among PEs), if tolerance is 0.1, the latency will be relax to (1+0.1)*optimalLatency (trade-off with energy)
 	treeFoldedRatio = 4;                // the H-Tree is assumed to be able to folding in layout (save area)
@@ -124,9 +124,9 @@ Param::Param() {
 	relaxArrayCellHeight = 0;           // relax ArrayCellHeight or not
 	relaxArrayCellWidth = 0;            // relax ArrayCellWidth or not
 	
-	numColMuxed = 1;                    // How many columns share 1 ADC (for eNVM and FeFET) or parallel SRAM
-	levelOutput = 16;                   // # of levels of the multilevelSenseAmp output, should be in 2^N forms; e.g. 32 levels --> 5-bit ADC
-	cellBit = 1;                        // precision of memory device 
+	numColMuxed = 8;                    // How many columns share 1 ADC (for eNVM and FeFET) or parallel SRAM
+	levelOutput = 32;                   // # of levels of the multilevelSenseAmp output, should be in 2^N forms; e.g. 32 levels --> 5-bit ADC
+	cellBit = 4;                        // precision of memory device 
 	
 	/*** parameters for SRAM ***/
 	heightInFeatureSizeSRAM = 8;        // SRAM Cell height in feature size
@@ -138,12 +138,12 @@ Param::Param() {
 	
 	/*** parameters for analog synaptic devices ***/
 	heightInFeatureSize1T1R = 4;        // 1T1R Cell height in feature size
-	widthInFeatureSize1T1R = 28;         // 1T1R Cell width in feature size
+	widthInFeatureSize1T1R = 4;         // 1T1R Cell width in feature size
 	heightInFeatureSizeCrossbar = 2;    // Crossbar Cell height in feature size
 	widthInFeatureSizeCrossbar = 2;     // Crossbar Cell width in feature size
 	
-	resistanceOn = 6e3;               // Ron resistance at Vr in the reported measurement data (need to recalculate below if considering the nonlinearity)
-	resistanceOff = 6e3*17;           // Roff resistance at Vr in the reported measurement dat (need to recalculate below if considering the nonlinearity)
+	resistanceOn = 500e3;               // Ron resistance at Vr in the reported measurement data (need to recalculate below if considering the nonlinearity)
+	resistanceOff = 500e3*100;           // Roff resistance at Vr in the reported measurement dat (need to recalculate below if considering the nonlinearity)
 	maxConductance = (double) 1/resistanceOn;
 	minConductance = (double) 1/resistanceOff;
 	
