@@ -17,7 +17,7 @@ This version has also added **_new features into inference accuracy estimation_*
 3. Introduce conductance variation of synaptic device
 4. Introduce partial-sum quantization effects into ADC
 ```
-**_For estimation of on-chip training accelerators, please visit released V2.0 [DNN+NeuroSim V2.0](https://github.com/neurosim/DNN_NeuroSim_V2.0)_**
+**_For estimation of on-chip training accelerators, please visit released V2.1 [DNN+NeuroSim V2.1](https://github.com/neurosim/DNN_NeuroSim_V2.1)_**
 
 In Pytorch/Tensorflow wrapper, users are able to define **_network structures, precision of synaptic weight and neural activation_**. With the integrated NeuroSim which takes real traces from wrapper, the framework can support hierarchical organization from device level to circuit level, to chip level and to algorithm level, enabling **_instruction-accurate evaluation on both accuracy and hardware performance of inference_**.
 
