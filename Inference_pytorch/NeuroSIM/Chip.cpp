@@ -713,9 +713,10 @@ double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &ne
 		double numBitToLoadOut = weightMatrixRow*param->numBitInput*numInVector;
 		double numBitToLoadIn = ceil(weightMatrixCol/param->numColPerSynapse)*param->numBitInput*numInVector/(netStructure[l][6]? 4:1);
 		
-		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, (numBitToLoadOut+numBitToLoadIn)/(GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
-		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, (GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)), 
-							(numBitToLoadOut+numBitToLoadIn)/(GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
+		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, ceil((numBitToLoadOut+numBitToLoadIn)/ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
+		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile), 
+					ceil((numBitToLoadOut+numBitToLoadIn)/ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
+		
 		globalBuffer->CalculateLatency(globalBuffer->interface_width, numBitToLoadOut/globalBuffer->interface_width,
 								globalBuffer->interface_width, numBitToLoadIn/globalBuffer->interface_width);
 		globalBuffer->CalculatePower(globalBuffer->interface_width, numBitToLoadOut/globalBuffer->interface_width,
@@ -823,9 +824,9 @@ double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &ne
 		double numBitToLoadOut = weightMatrixRow*param->numBitInput*numInVector/netStructure[l][3];
 		double numBitToLoadIn = ceil(weightMatrixCol/param->numColPerSynapse)*param->numBitInput*numInVector/(netStructure[l][6]? 4:1);
 		
-		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, (numBitToLoadOut+numBitToLoadIn)/(GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
-		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, (GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)), 
-							(numBitToLoadOut+numBitToLoadIn)/(GhTree->busWidth*ceil((numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
+		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, ceil((numBitToLoadOut+numBitToLoadIn)/ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
+		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], NMTileheight, NMTilewidth, ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile), 
+						ceil((numBitToLoadOut+numBitToLoadIn)/ceil(GhTree->busWidth*(numTileEachLayer[0][l]*numTileEachLayer[1][l])/totalNumTile)));
 		
 		globalBuffer->CalculateLatency(globalBuffer->interface_width, numBitToLoadOut/globalBuffer->interface_width,
 								globalBuffer->interface_width, numBitToLoadIn/globalBuffer->interface_width);
