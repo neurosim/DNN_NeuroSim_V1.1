@@ -1067,7 +1067,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 					mux.CalculatePower(numColMuxed);	// Mux still consumes energy during row-by-row read
 					muxDecoder.CalculatePower(numColMuxed, 1);
 				}
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				if (numReadPulse > 1) {
 					shiftAdd.CalculatePower(numColMuxed);
@@ -1141,7 +1141,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 				wlSwitchMatrix.CalculatePower(numColMuxed, 2*numWriteOperationPerRow*numRow*activityRowWrite, activityRowRead, activityColWrite);
 				precharger.CalculatePower(numColMuxed, numWriteOperationPerRow*numRow*activityRowWrite);
 				sramWriteDriver.CalculatePower(numWriteOperationPerRow*numRow*activityRowWrite);
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				
 				// Array
@@ -1171,7 +1171,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 				wlSwitchMatrix.CalculatePower(numColMuxed, 2*numWriteOperationPerRow*numRow*activityRowWrite, activityRowRead, activityColWrite);
 				precharger.CalculatePower(numColMuxed, numWriteOperationPerRow*numRow*activityRowWrite);
 				sramWriteDriver.CalculatePower(numWriteOperationPerRow*numRow*activityRowWrite);
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				if (numReadPulse > 1) {
 					shiftAdd.CalculatePower(numColMuxed);
@@ -1221,7 +1221,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 					mux.CalculatePower(numColMuxed);	// Mux still consumes energy during row-by-row read
 					muxDecoder.CalculatePower(numColMuxed, 1);
 				}
-				multilevelSenseAmp.CalculatePower(columnResistance, numRow*activityRowRead*numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, numRow*activityRowRead);
 				if (avgWeightBit > 1) {
 					multilevelSAEncoder.CalculatePower(numRow*activityRowRead*numColMuxed);
 				}
@@ -1289,7 +1289,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 					mux.CalculatePower(numColMuxed);	// Mux still consumes energy during row-by-row read
 					muxDecoder.CalculatePower(numColMuxed, 1);
 				}
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				if (numReadPulse > 1) {
 					shiftAdd.CalculatePower(numColMuxed);
@@ -1405,7 +1405,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 					mux.CalculatePower(numColMuxed);	// Mux still consumes energy during row-by-row read
 					muxDecoder.CalculatePower(numColMuxed, 1);
 				}
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				
 				// Read
@@ -1455,7 +1455,7 @@ void SubArray::CalculatePower(const vector<double> &columnResistance) {
 					mux.CalculatePower(numColMuxed);	// Mux still consumes energy during row-by-row read
 					muxDecoder.CalculatePower(numColMuxed, 1);
 				}
-				multilevelSenseAmp.CalculatePower(columnResistance, numColMuxed);
+				multilevelSenseAmp.CalculatePower(columnResistance, 1);
 				multilevelSAEncoder.CalculatePower(numColMuxed);
 				if (numReadPulse > 1) {
 					shiftAdd.CalculatePower(numColMuxed);
