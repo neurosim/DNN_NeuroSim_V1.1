@@ -492,9 +492,6 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 		inputBuffer->CalculateLatency(inputBuffer->interface_width, numBitToLoadOut/inputBuffer->interface_width, inputBuffer->interface_width, numBitToLoadOut/inputBuffer->interface_width);
 		inputBuffer->CalculatePower(inputBuffer->interface_width, numBitToLoadOut/inputBuffer->interface_width, inputBuffer->interface_width, numBitToLoadOut/inputBuffer->interface_width);
 		
-		*readLatency += inputBuffer->readLatency + inputBuffer->writeLatency;
-		*readDynamicEnergy += inputBuffer->readDynamicEnergy + inputBuffer->writeDynamicEnergy;
-		
 		if (!param->chipActivation) {
 			if (param->reLu) {
 				reLu->CalculateLatency(param->numColMuxed);
@@ -529,6 +526,9 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 		inputBuffer->writeLatency /= MIN(numInBufferCore, ceil(hTree->busWidth/inputBuffer->interface_width));
 		outputBuffer->readLatency /= MIN(numOutBufferCore, ceil(hTree->busWidth/inputBuffer->interface_width));
 		outputBuffer->writeLatency /= MIN(numOutBufferCore, ceil(hTree->busWidth/inputBuffer->interface_width));
+		
+		*readLatency += inputBuffer->readLatency + inputBuffer->writeLatency;
+		*readDynamicEnergy += inputBuffer->readDynamicEnergy + inputBuffer->writeDynamicEnergy;
 		
 		*readLatency += (outputBuffer->readLatency + outputBuffer->writeLatency);
 		*readDynamicEnergy += outputBuffer->readDynamicEnergy + outputBuffer->writeDynamicEnergy;
