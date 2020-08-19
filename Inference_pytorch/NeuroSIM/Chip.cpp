@@ -359,11 +359,7 @@ void ChipInitialize(InputParameter& inputParameter, Technology& tech, MemCell& c
 					double numPENM, double desiredNumTileNM, double desiredPESizeNM, double desiredNumTileCM, double desiredTileSizeCM, double desiredPESizeCM, int numTileRow, int numTileCol) { 
 
 	/*** Initialize Tile ***/
-
-	if (param->novelMapping) {
-		TileInitialize(inputParameter, tech, cell, numPENM, desiredPESizeNM);
-	}
-	TileInitialize(inputParameter, tech, cell, ceil((double)(desiredTileSizeCM)/(double)(desiredPESizeCM)), desiredPESizeCM);
+	TileInitialize(inputParameter, tech, cell, numPENM, desiredPESizeNM, ceil((double)(desiredTileSizeCM)/(double)(desiredPESizeCM)), desiredPESizeCM);
 	
 	// find max layer and define the global buffer: enough to hold the max layer inputs
 	double maxLayerInput = 0;
@@ -489,6 +485,7 @@ vector<double> ChipCalculateArea(InputParameter& inputParameter, Technology& tec
 	double areaADC = 0;
 	double areaAccum = 0;
 	double areaOther = 0;
+	double areaArray = 0;
 	
 	double NMheight = 0;
 	double NMwidth = 0;
@@ -506,34 +503,36 @@ vector<double> ChipCalculateArea(InputParameter& inputParameter, Technology& tec
 	vector<double> areaNMTile;
 	
 	if (param->novelMapping) {
-		areaNMTile = TileCalculateArea(numPENM, desiredPESizeNM, &NMheight, &NMwidth);
+		areaNMTile = TileCalculateArea(numPENM, desiredPESizeNM, true, &NMheight, &NMwidth);
 		double NMTileArea = areaNMTile[0];
 		double NMTileAreaIC = areaNMTile[1];
 		double NMTileAreaADC = areaNMTile[2];
 		double NMTileAreaAccum = areaNMTile[3];
 		double NMTileAreaOther = areaNMTile[4];
+		double NMTileAreaArray = areaNMTile[5];
 		area += NMTileArea*desiredNumTileNM;
 		areaIC += NMTileAreaIC*desiredNumTileNM;
 		areaADC += NMTileAreaADC*desiredNumTileNM;
 		areaAccum += NMTileAreaAccum*desiredNumTileNM;
 		areaOther += NMTileAreaOther*desiredNumTileNM;
+		areaArray += NMTileAreaArray*desiredNumTileNM;
 		*NMTileheight = NMheight;
 		*NMTilewidth = NMwidth;
 	}
-	
-	areaCMTile = TileCalculateArea(pow(ceil((double) desiredTileSizeCM/(double) desiredPESizeCM), 2), desiredPESizeCM, &CMheight, &CMwidth);
+	areaCMTile = TileCalculateArea(pow(ceil((double) desiredTileSizeCM/(double) desiredPESizeCM), 2), desiredPESizeCM, false, &CMheight, &CMwidth);
 	
 	double CMTileArea = areaCMTile[0];
 	double CMTileAreaIC = areaCMTile[1];
 	double CMTileAreaADC = areaCMTile[2];
 	double CMTileAreaAccum = areaCMTile[3];
 	double CMTileAreaOther = areaCMTile[4];
-	
+	double CMTileAreaArray = areaCMTile[5];
 	area += CMTileArea*desiredNumTileCM;
 	areaIC += CMTileAreaIC*desiredNumTileCM;
 	areaADC += CMTileAreaADC*desiredNumTileCM;
 	areaAccum += CMTileAreaAccum*desiredNumTileCM;
 	areaOther += CMTileAreaOther*desiredNumTileCM;
+	areaArray += CMTileAreaArray*desiredNumTileCM;
 	*CMTileheight = CMheight;
 	*CMTilewidth = CMwidth;
 	
@@ -570,6 +569,7 @@ vector<double> ChipCalculateArea(InputParameter& inputParameter, Technology& tec
 	areaResults.push_back(areaADC);
 	areaResults.push_back(areaAccum + Gaccumulation->area);
 	areaResults.push_back(areaOther + globalBufferArea + maxPool->area + areaGreLu + areaGsigmoid);
+	areaResults.push_back(areaArray);
 	
 	*height = sqrt(area);
 	*width = area/(*height);
@@ -578,7 +578,7 @@ vector<double> ChipCalculateArea(InputParameter& inputParameter, Technology& tec
 }
 
 
-double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &newweightfile, const string &oldweightfile, const string &inputfile, bool followedByMaxPool, 
+double ChipCalculatePerformance(InputParameter& inputParameter, Technology& tech, MemCell& cell, int layerNumber, const string &newweightfile, const string &oldweightfile, const string &inputfile, bool followedByMaxPool, 
 							const vector<vector<double> > &netStructure, const vector<int> &markNM, const vector<vector<double> > &numTileEachLayer, const vector<vector<double> > &utilizationEachLayer, 
 							const vector<vector<double> > &speedUpEachLayer, const vector<vector<double> > &tileLocaEachLayer, double numPENM, double desiredPESizeNM, double desiredTileSizeCM, 
 							double desiredPESizeCM, double CMTileheight, double CMTilewidth, double NMTileheight, double NMTilewidth,
@@ -716,7 +716,6 @@ double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &ne
 		GhTree->CalculateLatency(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, ceil((numBitToLoadOut+numBitToLoadIn)/GhTree->busWidth));
 		GhTree->CalculatePower(0, 0, tileLocaEachLayer[0][l], tileLocaEachLayer[1][l], CMTileheight, CMTilewidth, GhTree->busWidth, 
 							ceil((numBitToLoadOut+numBitToLoadIn)/GhTree->busWidth));
-							
 		globalBuffer->CalculateLatency(globalBuffer->interface_width, numBitToLoadOut/globalBuffer->interface_width,
 								globalBuffer->interface_width, numBitToLoadIn/globalBuffer->interface_width);
 		globalBuffer->CalculatePower(globalBuffer->interface_width, numBitToLoadOut/globalBuffer->interface_width,
@@ -850,6 +849,7 @@ double ChipCalculatePerformance(MemCell& cell, int layerNumber, const string &ne
 	*coreEnergyOther += globalBuffer->readDynamicEnergy + globalBuffer->writeDynamicEnergy + GhTree->readDynamicEnergy;
 
 	*leakage = tileLeakage;
+	
 }
 
 

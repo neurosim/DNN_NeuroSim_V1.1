@@ -243,7 +243,7 @@ int main(int argc, char * argv[]) {
 		for (int i=0; i<netStructure.size(); i++) {
 			cout << "-------------------- Estimation of Layer " << i+1 << " ----------------------" << endl;
 			
-			ChipCalculatePerformance(cell, i, argv[2*i+4], argv[2*i+4], argv[2*i+5], netStructure[i][6],
+			ChipCalculatePerformance(inputParameter, tech, cell, i, argv[2*i+4], argv[2*i+4], argv[2*i+5], netStructure[i][6],
 						netStructure, markNM, numTileEachLayer, utilizationEachLayer, speedUpEachLayer, tileLocaEachLayer,
 						numPENM, desiredPESizeNM, desiredTileSizeCM, desiredPESizeCM, CMTileheight, CMTilewidth, NMTileheight, NMTilewidth,
 						&layerReadLatency, &layerReadDynamicEnergy, &tileLeakage, &layerbufferLatency, &layerbufferDynamicEnergy, &layericLatency, &layericDynamicEnergy,
@@ -318,7 +318,7 @@ int main(int argc, char * argv[]) {
 		vector<double> coreEnergyOtherPerLayer;
 		
 		for (int i=0; i<netStructure.size(); i++) {
-			ChipCalculatePerformance(cell, i, argv[2*i+4], argv[2*i+4], argv[2*i+5], netStructure[i][6],
+			ChipCalculatePerformance(inputParameter, tech, cell, i, argv[2*i+4], argv[2*i+4], argv[2*i+5], netStructure[i][6],
 						netStructure, markNM, numTileEachLayer, utilizationEachLayer, speedUpEachLayer, tileLocaEachLayer,
 						numPENM, desiredPESizeNM, desiredTileSizeCM, desiredPESizeCM, CMTileheight, CMTilewidth, NMTileheight, NMTilewidth,
 						&layerReadLatency, &layerReadDynamicEnergy, &tileLeakage, &layerbufferLatency, &layerbufferDynamicEnergy, &layericLatency, &layericDynamicEnergy,
@@ -433,9 +433,11 @@ int main(int argc, char * argv[]) {
 	cout << "----------------------------- Performance -------------------------------" << endl;
 	if (! param->pipeline) {
 		cout << "Energy Efficiency TOPS/W (Layer-by-Layer Process): " << numComputation/(chipReadDynamicEnergy*1e12+chipLeakageEnergy*1e12) << endl;
+		cout << "Throughput TOPS (Layer-by-Layer Process): " << numComputation/(chipReadLatency*1e12) << endl;
 		cout << "Throughput FPS (Layer-by-Layer Process): " << 1/(chipReadLatency) << endl;
 	} else {
 		cout << "Energy Efficiency TOPS/W (Pipelined Process): " << numComputation/(chipReadDynamicEnergy*1e12+chipLeakageEnergy*1e12) << endl;
+		cout << "Throughput TOPS (Pipelined Process): " << numComputation/(chipReadLatency*1e12) << endl;
 		cout << "Throughput FPS (Pipelined Process): " << 1/(chipReadLatency) << endl;
 	}
 	cout << "-------------------------------------- Hardware Performance Done --------------------------------------" <<  endl;
