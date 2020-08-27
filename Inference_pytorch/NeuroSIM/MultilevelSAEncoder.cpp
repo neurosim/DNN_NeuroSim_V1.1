@@ -69,8 +69,10 @@ void MultilevelSAEncoder::CalculateArea(double _newHeight, double _newWidth, Are
 	if (!initialized) {
 		cout << "[MultilevelSAEncoder] Error: Require initialization first!" << endl;
 	} else {
-        double wEncoder, hEncoder, wNand, hNand, wNandLg, hNandLg, wInv, hInv;
-		
+        	double wEncoder, hEncoder, wNand, hNand, wNandLg, hNandLg, wInv, hInv;
+		area = 0;
+		height = 0;
+		width = 0;
 		// NAND2
 		CalculateGateArea(NAND, 2, widthNandN, widthNandP, tech.featureSize * MAX_TRANSISTOR_HEIGHT, tech, &hNand, &wNand);
 		// INV
