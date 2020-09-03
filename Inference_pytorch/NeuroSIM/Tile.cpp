@@ -439,8 +439,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 				
 				// whether go through accumulation?
 				if (ceil((double)weightMatrixRow/(double)peSize) > 1) {
-					accumulationCM->CalculateLatency(param->numColMuxed, ceil((double)weightMatrixRow/(double)peSize), 0);
-					accumulationCM->CalculatePower(param->numColMuxed, ceil((double)weightMatrixRow/(double)peSize));
+					accumulationCM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed, ceil((double)weightMatrixRow/(double)peSize), 0);
+					accumulationCM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed, ceil((double)weightMatrixRow/(double)peSize));
 					*readLatency += accumulationCM->readLatency; 
 					*readDynamicEnergy += accumulationCM->readDynamicEnergy;
 					*coreLatencyAccum += accumulationCM->readLatency; 
@@ -485,8 +485,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 					*coreEnergyOther += peEnergyOther;
 				}
 			}
-			accumulationCM->CalculateLatency(param->numColMuxed, numPE, 0);
-			accumulationCM->CalculatePower(param->numColMuxed, numPE);
+			accumulationCM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed, numPE, 0);
+			accumulationCM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed, numPE);
 			*readLatency += accumulationCM->readLatency;
 			*readDynamicEnergy += accumulationCM->readDynamicEnergy;
 			*coreLatencyAccum += accumulationCM->readLatency;
@@ -495,8 +495,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 		double numBitToLoadOut, numBitToLoadIn;											  
 		if (!param->chipActivation) {
 			if (param->reLu) {
-				reLuCM->CalculateLatency(param->numColMuxed);
-				reLuCM->CalculatePower(param->numColMuxed);
+				reLuCM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed/reLuCM->numUnit);
+				reLuCM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed/reLuCM->numUnit);
 				*readLatency += reLuCM->readLatency;
 				*readDynamicEnergy += reLuCM->readDynamicEnergy;
 				*coreLatencyOther += reLuCM->readLatency;
@@ -505,8 +505,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 				outputBufferCM->CalculateLatency(outputBufferCM->interface_width, numBitToLoadIn/outputBufferCM->interface_width, outputBufferCM->interface_width, numBitToLoadIn/outputBufferCM->interface_width);
 				outputBufferCM->CalculatePower(outputBufferCM->interface_width, numBitToLoadIn/outputBufferCM->interface_width, outputBufferCM->interface_width, numBitToLoadIn/outputBufferCM->interface_width);
 			} else {
-				sigmoidCM->CalculateLatency(param->numColMuxed);
-				sigmoidCM->CalculatePower(param->numColMuxed);
+				sigmoidCM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed/sigmoidCM->numEntry);
+				sigmoidCM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed/sigmoidCM->numEntry);
 				*readLatency += sigmoidCM->readLatency;
 				*readDynamicEnergy += sigmoidCM->readDynamicEnergy;
 				*coreLatencyOther += sigmoidCM->readLatency;
@@ -587,8 +587,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 		*bufferLatency /= (speedUpRow*speedUpCol);
 		*icLatency /= (speedUpRow*speedUpCol);
 		
-		accumulationNM->CalculateLatency(param->numColMuxed, numPE, 0);
-		accumulationNM->CalculatePower(param->numColMuxed, numPE);
+		accumulationNM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed, numPE, 0);
+		accumulationNM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed, numPE);
 		*readLatency += accumulationNM->readLatency;
 		*readDynamicEnergy += accumulationNM->readDynamicEnergy;
 		
@@ -603,8 +603,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 		
 		if (!param->chipActivation) {
 			if (param->reLu) {
-				reLuNM->CalculateLatency(param->numColMuxed);
-				reLuNM->CalculatePower(param->numColMuxed);
+				reLuNM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed/reLuNM->numUnit);
+				reLuNM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed/reLuNM->numUnit);
 				*readLatency += reLuNM->readLatency;
 				*readDynamicEnergy += reLuNM->readDynamicEnergy;
 				*coreLatencyOther += reLuNM->readLatency;
@@ -614,8 +614,8 @@ void TileCalculatePerformance(const vector<vector<double> > &newMemory, const ve
 				outputBufferNM->CalculateLatency(outputBufferNM->interface_width, numBitToLoadIn/outputBufferNM->interface_width, outputBufferNM->interface_width, numBitToLoadIn/outputBufferNM->interface_width);
 				outputBufferNM->CalculatePower(outputBufferNM->interface_width, numBitToLoadIn/outputBufferNM->interface_width, outputBufferNM->interface_width, numBitToLoadIn/outputBufferNM->interface_width);
 			} else {
-				sigmoidNM->CalculateLatency(param->numColMuxed);
-				sigmoidNM->CalculatePower(param->numColMuxed);
+				sigmoidNM->CalculateLatency((int)(numInVector/param->numBitInput)*param->numColMuxed/sigmoidNM->numEntry);
+				sigmoidNM->CalculatePower((int)(numInVector/param->numBitInput)*param->numColMuxed/sigmoidNM->numEntry);
 				*readLatency += sigmoidNM->readLatency;
 				*readDynamicEnergy += sigmoidNM->readDynamicEnergy;
 				*coreLatencyOther += sigmoidNM->readLatency;
