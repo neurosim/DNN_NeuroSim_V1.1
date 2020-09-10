@@ -187,7 +187,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
     } else if (cell.memCellType == Type::RRAM || cell.memCellType == Type::FeFET) {
 		if (cell.accessType == CMOS_access) {	// 1T1R
 			cell.resCellAccess = cell.resistanceOn * IR_DROP_TOLERANCE;    //calculate access CMOS resistance
-			cell.widthAccessCMOS = CalculateOnResistance(tech.featureSize, NMOS, inputParameter.temperature, tech) * IR_DROP_TOLERANCE * 2 / cell.resCellAccess;   //get access CMOS width
+			cell.widthAccessCMOS = CalculateOnResistance(tech.featureSize, NMOS, inputParameter.temperature, tech) * LINEAR_REGION_RATIO / cell.resCellAccess;   //get access CMOS width
 			if (cell.widthAccessCMOS > cell.widthInFeatureSize) {	// Place transistor vertically
 				printf("Transistor width of 1T1R=%.2fF is larger than the assigned cell width=%.2fF in layout\n", cell.widthAccessCMOS, cell.widthInFeatureSize);
 				exit(-1);
@@ -215,7 +215,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			double capBL = lengthCol * 0.2e-15/1e-6;
 			int numAdder = (int)ceil(numCol/numColMuxed);   // numCol is divisible by numCellPerSynapse
 			int numInput = numAdder;        //XXX input number of MUX, 
-			double resTg = cell.resMemCellOn / 2;     //transmission gate resistance
+			double resTg = cell.resMemCellOn * LINEAR_REGION_RATIO;     //transmission gate resistance
 			int adderBit = (int)ceil(log2(numRow)) + avgWeightBit;  
 			
 			wlDecoder.Initialize(REGULAR_ROW, (int)ceil(log2(numRow)), false, false);          
@@ -241,7 +241,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			}
 		} else if (conventionalParallel) { 
 		
-			double resTg = cell.resMemCellOn / numRow / 2;
+			double resTg = cell.resMemCellOn / numRow * LINEAR_REGION_RATIO;
 			
 			if (cell.accessType == CMOS_access) {
 				wlNewSwitchMatrix.Initialize(numRow, activityRowRead, clkFreq);         
@@ -261,7 +261,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			}
 			
 		} else if (BNNsequentialMode || XNORsequentialMode) {       
-			double resTg = cell.resMemCellOn / 2;
+			double resTg = cell.resMemCellOn * LINEAR_REGION_RATIO;
 			int numAdder = (int)ceil(numCol/numColMuxed);  
 			int numInput = numAdder;        
 			int adderBit = (int)ceil(log2(numRow)) + 1; 
@@ -281,7 +281,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			dff.Initialize((adderBit+1)*numAdder, clkFreq); 
 			adder.Initialize(adderBit, numAdder);
 		} else if (BNNparallelMode || XNORparallelMode) {      
-			double resTg = cell.resMemCellOn / numRow / 2;
+			double resTg = cell.resMemCellOn / numRow * LINEAR_REGION_RATIO;
 			
 			if (cell.accessType == CMOS_access) {
 				wlNewSwitchMatrix.Initialize(numRow, activityRowRead, clkFreq);         
@@ -296,7 +296,7 @@ void SubArray::Initialize(int _numRow, int _numCol, double _unitWireRes){  //ini
 			multilevelSenseAmp.Initialize(numCol/numColMuxed, levelOutput, clkFreq, numReadCellPerOperationNeuro, true);
 			multilevelSAEncoder.Initialize(levelOutput, numCol/numColMuxed);
 		} else {
-			double resTg = cell.resMemCellOn / numRow / 2;
+			double resTg = cell.resMemCellOn / numRow * LINEAR_REGION_RATIO;
 			
 			if (cell.accessType == CMOS_access) {
 				wlNewSwitchMatrix.Initialize(numRow, activityRowRead, clkFreq);         
