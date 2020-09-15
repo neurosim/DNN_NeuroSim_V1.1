@@ -63,7 +63,7 @@ void Mux::Initialize(int _numInput, int _numSelection, double _resTg, bool _FPGA
 		resTg = 1 / (1/CalculateOnResistance(widthTgN, NMOS, inputParameter.temperature, tech) 
 					+ 1/CalculateOnResistance(widthTgP, PMOS, inputParameter.temperature, tech));
 	} else {
-		resTg = _resTg * IR_DROP_TOLERANC;
+		resTg = _resTg * IR_DROP_TOLERANCE;
 		widthTgN = CalculateOnResistance(tech.featureSize, NMOS, inputParameter.temperature, tech)
 								* tech.featureSize  * LINEAR_REGION_RATIO/ (resTg*2);
 		widthTgP = CalculateOnResistance(tech.featureSize, PMOS, inputParameter.temperature, tech)
