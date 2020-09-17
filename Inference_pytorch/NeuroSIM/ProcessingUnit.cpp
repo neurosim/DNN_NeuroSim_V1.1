@@ -523,7 +523,7 @@ double ProcessingUnitCalculatePerformance(SubArray *subArray, const vector<vecto
 		bufferInputCM->CalculateLatency(0, numInVector*ceil((double) weightMatrixRow/(double) param->numRowSubArray));
 		bufferOutputCM->CalculateLatency(0, numInVector/param->numBitInput);
 		bufferInputCM->CalculatePower(weightMatrixRow/param->numRowPerSynapse, numInVector);
-		bufferOutputCM->CalculatePower(weightMatrixCol/param->numColPerSynapse*adderTreeNM->numAdderBit, numInVector/param->numBitInput);
+		bufferOutputCM->CalculatePower(weightMatrixCol/param->numColPerSynapse*adderTreeCM->numAdderBit, numInVector/param->numBitInput);
 		
 		busInputCM->CalculateLatency(weightMatrixRow/param->numRowPerSynapse*numInVector/(busInputCM->busWidth)); 
 		busInputCM->CalculatePower(busInputCM->busWidth, weightMatrixRow/param->numRowPerSynapse*numInVector/(busInputCM->busWidth));
