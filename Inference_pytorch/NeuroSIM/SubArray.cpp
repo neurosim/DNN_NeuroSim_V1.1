@@ -775,7 +775,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 			if (conventionalSequential) {
 				double capBL = lengthCol * 0.2e-15/1e-6;
 				double colRamp = 0;
-				double tau = (capCol)*(cell.resMemCellAvg/(numRow/2));
+				double tau = (capCol)*(cell.resMemCellAvg);
 				colDelay = horowitz(tau, 0, 1e20, &colRamp)*numColMuxed;	// Just to generate colRamp
 				colDelay = tau * 0.2 * numColMuxed;  // assume the 15~20% voltage drop is enough for sensing
 				int numWriteOperationPerRow = (int)ceil((double)numCol*activityColWrite/numWriteCellPerOperationNeuro);
@@ -872,7 +872,7 @@ void SubArray::CalculateLatency(double columnRes, const vector<double> &columnRe
 			} else if (BNNsequentialMode || XNORsequentialMode) {
 				double capBL = lengthCol * 0.2e-15/1e-6;
 				double colRamp = 0;
-				double tau = (capCol)*(cell.resMemCellAvg/(numRow/2));
+				double tau = (capCol)*(cell.resMemCellAvg);
 				colDelay = horowitz(tau, 0, 1e20, &colRamp)*numColMuxed;
 				colDelay = tau * 0.2 * numColMuxed;  // assume the 15~20% voltage drop is enough for sensing
 				int numWriteOperationPerRow = (int)ceil((double)numCol*activityColWrite/numWriteCellPerOperationNeuro);
