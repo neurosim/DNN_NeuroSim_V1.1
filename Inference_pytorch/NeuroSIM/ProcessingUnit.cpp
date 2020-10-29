@@ -157,6 +157,7 @@ void ProcessingUnitInitialize(SubArray *& subArray, InputParameter& inputParamet
 	subArray->numReadPulse = param->numBitInput;
 	subArray->avgWeightBit = param->cellBit;
 	subArray->numCellPerSynapse = param->numColPerSynapse;
+	subArray->spikingMode = NONSPIKING;
 	
 	int numRow = param->numRowSubArray;
 	int numCol = param->numColSubArray;
