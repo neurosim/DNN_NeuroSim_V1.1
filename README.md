@@ -29,7 +29,7 @@ This research is supported by NSF CAREER award, NSF/SRC E2CDA program, and ASCEN
 
 If you use the tool or adapt the tool in your work or publication, you are required to cite the following reference:
 
-**_X. Peng, S. Huang, Y. Luo, X. Sun and S. Yu, ※DNN+NeuroSim: An End-to-End Benchmarking Framework for Compute-in-Memory Accelerators with Versatile Device Technologies, *§ IEEE International Electron Devices Meeting (IEDM)*, 2019._**
+**_X. Peng, S. Huang, Y. Luo, X. Sun and S. Yu, ※[DNN+NeuroSim: An End-to-End Benchmarking Framework for Compute-in-Memory Accelerators with Versatile Device Technologies](https://ieeexplore-ieee-org.prx.library.gatech.edu/document/8993491), *§ IEEE International Electron Devices Meeting (IEDM)*, 2019._**
 
 The default example is 8-bit VGG-8 for CIFAR-10 in this framework.
 
