@@ -17,7 +17,7 @@ This version has also added **_new features into inference accuracy estimation_*
 3. Introduce conductance variation of synaptic device
 4. Introduce partial-sum quantization effects into ADC
 ```
-**_For improved version of inference engine with more design options, please visit released V1.2 [DNN+NeuroSim V1.2](https://github.com/neurosim/DNN_NeuroSim_V1.2)_**
+**_For improved version of inference engine with more design options, please visit released V1.2 [DNN+NeuroSim V1.2](https://github.com/neurosim/DNN_NeuroSim_V1.2) and V1.3 [DNN+NeuroSim V1.3](https://github.com/neurosim/DNN_NeuroSim_V1.3)_**
 
 **_For estimation of on-chip training accelerators, please visit released V2.1 [DNN+NeuroSim V2.1](https://github.com/neurosim/DNN_NeuroSim_V2.1)_**
 
